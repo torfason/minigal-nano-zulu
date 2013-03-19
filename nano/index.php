@@ -13,17 +13,24 @@ Support: www.minigal.dk
 Community: www.minigal.dk/forum
 
 Please enjoy this free script!
-*/
 
+
+Version 0.3.5 modified by Sebastien SAUVAGE (sebsauvage.net):
+  - Disabled new version check (problems on some servers)
+  - Disabled error reporting
+  - Added gallery comment (create comment.html in each directory)
+  - security update against XSS
+  
+*/
 // Do not edit below this section unless you know what you are doing!
 
 
 //-----------------------
 // Debug stuff
 //-----------------------
-	error_reporting(E_ERROR);
+//	error_reporting(E_ERROR);
 //	error_reporting(E_ALL);
-//	error_reporting(0);
+	error_reporting(0);
 /*
 	$mtime = microtime();
 	$mtime = explode(" ",$mtime);
@@ -46,6 +53,8 @@ $new = "";
 $images = "";
 $exif_data = "";
 $messages = "";
+$comment = "";
+
 
 //-----------------------
 // PHP ENVIRONMENT CHECK
@@ -126,14 +135,14 @@ function checkpermissions($file) {
 //-----------------------
 // CHECK FOR NEW VERSION
 //-----------------------
-if (ini_get('allow_url_fopen') == "1") {
-	$file = @fopen ("http://www.minigal.dk/minigalnano_version.php", "r");
-	$server_version = fgets ($file, 1024);
-	if (strlen($server_version) == 5 ) { //If string retrieved is exactly 5 chars then continue
-		if (version_compare($server_version, $version, '>')) $messages = "MiniGal Nano $server_version is available! <a href='http://www.minigal.dk/minigal-nano.html' target='_blank'>Get it now</a>";
-	}
-	fclose($file);
-}
+//if (ini_get('allow_url_fopen') == "1") {
+//	$file = @fopen ("http://www.minigal.dk/minigalnano_version.php", "r");
+//	$server_version = fgets ($file, 1024);
+//	if (strlen($server_version) == 5 ) { //If string retrieved is exactly 5 chars then continue
+//		if (version_compare($server_version, $version, '>')) $messages = "MiniGal Nano $server_version is available! <a href='http://www.minigal.dk/minigal-nano.html' target='_blank'>Get it now</a>";
+//	}
+//	fclose($file);
+//}
 
 if (!defined("GALLERY_ROOT")) define("GALLERY_ROOT", "");
 $thumbdir = rtrim('photos' . "/" .$_REQUEST["dir"],"/");
@@ -238,7 +247,7 @@ if (file_exists($currentdir ."/captions.txt"))
      			}   		
 	}
   closedir($handle);
-  } else die("ERROR: Could not open $currentdir for reading!");
+  } else die("ERROR: Could not open ".htmlspecialchars(stripslashes($currentdir))." for reading!");
 
 //-----------------------
 // SORT FILES AND FOLDERS
@@ -369,12 +378,22 @@ if ($messages != "") {
 $messages = "<div id=\"topbar\">" . $messages . " <a href=\"#\" onclick=\"document.getElementById('topbar').style.display = 'none';\";><img src=\"images/close.png\" /></a></div>";
 }
 
+// Read folder comment.
+$comment_filepath = $currentdir . $file . "/comment.html";
+if (file_exists($comment_filepath))
+{
+    $fd = fopen($comment_filepath, "r");
+    $comment = utf8_encode(fread($fd,filesize ($comment_filepath))); // utf8_encode to convert from iso-8859 to UTF-8
+    fclose($fd);
+}
+
+
 //PROCESS TEMPLATE FILE
 	if(GALLERY_ROOT != "") $templatefile = GALLERY_ROOT . "templates/integrate.html";
 	else $templatefile = "templates/" . $templatefile . ".html";
 	if(!$fd = fopen($templatefile, "r"))
 	{
-		echo "Template $templatefile not found!";
+		echo "Template ".htmlspecialchars(stripslashes($templatefile))." not found!";
 		exit();
 	}
 	else
@@ -390,6 +409,7 @@ $messages = "<div id=\"topbar\">" . $messages . " <a href=\"#\" onclick=\"docume
 		$template = preg_replace("/<% thumbnails %>/", "$thumbnails", $template);
 		$template = preg_replace("/<% breadcrumb_navigation %>/", "$breadcrumb_navigation", $template);
 		$template = preg_replace("/<% page_navigation %>/", "$page_navigation", $template);
+		$template = preg_replace("/<% folder_comment %>/", "$comment", $template);
 		$template = preg_replace("/<% bgcolor %>/", "$backgroundcolor", $template);
 		$template = preg_replace("/<% gallery_width %>/", "$gallery_width", $template);
 		$template = preg_replace("/<% version %>/", "$version", $template);

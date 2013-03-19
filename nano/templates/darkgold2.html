@@ -12,53 +12,60 @@ body {
 	margin: 0 auto;
 	padding: 0;
 	width: <% gallery_width %>;
-	font: 12px Lucida Sans Unicode, Georgia, sans-serif, Georgia, "Times New Roman", Times, serif;
-	background: black;
-	color: #eee;
+	font: 12px Tahoma,Verdana,Arial,Helvetica, sans-serif;
+	background: #272727;
+	color: #BDBDBD;
 }
 h1 {
-	font: normal 220%/100% Georgia, Verdana, Arial, sans-serif Unicode, Georgia, "Times New Roman", Times, serif;
+	font: normal 250%/100% "Trebuchet MS",Tahoma,Verdana,Arial,Helvetica, sans-serif;
 	margin: 20px 0 5px 0;
-	letter-spacing: 5px;
+	letter-spacing: -1px;
+	color: #FFCC11;	
+	text-shadow: #000000 2px 2px 2px;
 }
 .credits {
+	border-bottom: solid 1px #434343;
 	padding-bottom: 5px;
-	margin: 0 0 30px 0;
-	font: 120% Georgia, Lucida Sans Unicode, Garamond, Georgia, serif;
+	margin-bottom: 5px;
+	color: #CF8D26;
+	font: 100% "Trebuchet MS",Tahoma,Verdana,Arial,Helvetica, sans-serif;
 }
 .credits em {
-	color: #999;
+	color: #BDBDBD;
+    font-style: normal;
+    font-style: normal;
 }
 .backlink a {
 	font-size: 10px;
 	text-decoration: none;
-	color: #AAA;
+	color: #666;
 }
 .backlink a:hover,
 .backlink a:visited:hover {
-	color: #555;
+	color: #888;
 }
 img {
 	border: none;
 }
 #page_nav {
-	color: #999;
+	color: #BDBDBD;
 	clear:both;
 	text-align: center;
 }
 #page_nav a:link, #page_nav a:visited, #page_nav a:hover, #page_nav a:visited:hover {
 	text-decoration: none;
-	color: #eee;
+	color: #FFCC11;
 }
 #breadcrumb_nav {
-	color: #999;
+	color: #BDBDBD;
+	font-weight: bold;
 }
 #breadcrumb_nav a:link, #breadcrumb_nav a:visited, #breadcrumb_nav a:hover, #breadcrumb_nav a:visited:hover {
 	text-decoration: none;
-	color: #eee;
+	color: #FFCC11;
 }
 a {
-	color: #eee;	
+	color: #FFCC11;
 }
 #container {
 	overflow: auto;
@@ -102,6 +109,12 @@ a {
 {
  margin-bottom:10px;
 }
+
+#folder_comment a {
+	color: #FFCC11;
+              text-decoration: none;
+
+}
 /* ---------- gallery styles start here ----------------------- */
 .gallery {
 	list-style: none;
@@ -130,9 +143,11 @@ a {
 }
 .gallery em {
 	background: #000;
-	color: #fff;
+	color: #FFCC11;
+	font-family: "Trebuchet MS",Tahoma,Verdana,Arial,Helvetica, sans-serif;
 	font-style: normal;
-	font-size: 12px;
+	font-weight: bold;
+	font-size: 14px;
 	padding: 2px 2px;
 	display: block;
 	position: absolute;
@@ -180,7 +195,7 @@ a {
 <div id="page_nav"><% page_navigation %></div>
 <br />
 <!-- CREDITS - DO NOT REMOVE OR YOU WILL VOID MiniGal Nano TERMS OF USE -->
-<div class="backlink" align="center"><a href="http://www.minigal.dk" title="Powered by MiniGal Nano" target="_blank">Powered by MiniGal Nano <% version %></a> <a href="http://sebsauvage.net/wiki/doku.php?id=minigal_nano" >SSE2</a></div>
+<div class="backlink" align="center"><a href="http://www.minigal.dk" title="Powered by MiniGal Nano" target="_blank">Powered by MiniGal Nano <% version %></a> <a href="http://sebsauvage.net/wiki/doku.php?id=minigal_nano" style="color:#aaa;">SSE2</a></div>
 <br /><br />
 </body>
 </html>

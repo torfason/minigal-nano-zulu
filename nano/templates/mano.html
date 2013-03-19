@@ -96,6 +96,12 @@ a {
 	vertical-align: middle;
 }
 
+#folder_comment
+{
+ margin-top:10px;
+ margin-left:10px;
+}
+
 /* ---------- gallery styles start here ----------------------- */
 .gallery {
 	list-style: none;
@@ -152,6 +158,7 @@ a {
 <p class="credits"><em>by: </em><% author %></p>
 <span id="breadcrumb_nav"><% breadcrumb_navigation %></span>
 <div id="container">
+<div id="folder_comment"><% folder_comment %></div>
 <ul class="gallery">
 <% thumbnails %>
 </ul>
@@ -161,7 +168,7 @@ a {
 <br />
 <!-- CREDITS - DO NOT REMOVE OR YOU WILL VOID MiniGal Nano TERMS OF USE -->
 <hr id="bottom" />
-<div class="backlink" align="center"><a href="http://www.minigal.dk" title="Powered by MiniGal Nano" target="_blank">Powered by MiniGal Nano <% version %></a></div>
+<div class="backlink" align="center"><a href="http://www.minigal.dk" title="Powered by MiniGal Nano" target="_blank">Powered by MiniGal Nano <% version %></a> <a href="http://sebsauvage.net/wiki/doku.php?id=minigal_nano" >SSE2</a></div>
 <br /><br />
 </body>
 </html>

@@ -16,12 +16,12 @@ Please enjoy this free script!
 */
 
 // EDIT SETTINGS BELOW TO CUSTOMIZE YOUR GALLERY
-$thumbs_pr_page 		= "28"; //Number of thumbnails on a single page
+$thumbs_pr_page 		= "21"; //Number of thumbnails on a single page
 $gallery_width 			= "900px"; //Gallery width. Eg: "500px" or "70%"
 $backgroundcolor 		= "white"; //This provides a quick way to change your gallerys background to suit your website. Use either main colors like "black", "white", "yellow" etc. Or HEX colors, eg. "#AAAAAA"
-$templatefile 			= "mano"; //Template filename (must be placed in 'templates' folder)
-$title 					= "MiniGal Nano Testsite"; // Text to be displayed in browser titlebar
-$author 				= "Rybber";
+$templatefile 			= "darkgold2"; //Template filename (must be placed in 'templates' folder)
+$title 					= "My Gallery"; // Text to be displayed in browser titlebar
+$author 				= "Me :)";
 $folder_color 			= "black"; // Color of folder icons: blue / black / vista / purple / green / grey
 $sorting_folders		= "name"; // Sort folders by: [name][date]
 $sorting_files			= "name"; // Sort files by: [name][date][size]
@@ -39,5 +39,5 @@ $label_loading 			= "Loading..."; //Thumbnail loading text
 //ADVANCED SETTINGS
 $thumb_size 			= 120; //Thumbnail height/width (square thumbs). Changing this will most likely require manual altering of the template file to make it look properly! 
 $label_max_length 		= 30; //Maximum chars of a folder name that will be displayed on the folder thumbnail  
-$display_exif			= 1;
+$display_exif			= 0;
 ?>
