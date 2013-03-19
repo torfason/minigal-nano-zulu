@@ -11,7 +11,10 @@ var Mediabox;
 
 (function() {
 	// Global variables, accessible to Mediabox only
-	var options, images, activeImage, prevImage, nextImage, top, mTop, left, mLeft, winWidth, winHeight, fx, preload, preloadPrev = new Image(), preloadNext = new Image(), foxfix = false, iefix = false,
+	var options, images, activeImage, prevImage, nextImage, nextImg_2, top, mTop, left, mLeft, winWidth, winHeight, fx, preload, 
+    preloadPrev = new Image(), preloadNext = new Image(), preloadNx_2 = new Image(), foxfix = false, iefix = false,
+    // MT custom variables
+    slideshowIntervalID = 0,
 	// DOM elements
 	overlay, center, image, bottom, captionSplit, title, caption, prevLink, number, nextLink,
 	// Mediabox specific vars
@@ -64,7 +67,7 @@ var Mediabox;
 													// Does not apply to iFrame content, does not affect mouse scrolling
 				overlayOpacity: 0.7,			// 1 is opaque, 0 is completely transparent (change the color in the CSS file)
 				resizeOpening: true,			// Determines if box opens small and grows (true) or starts at larger size (false)
-				resizeDuration: 240,			// Duration of each of the box resize animations (in milliseconds)
+				resizeDuration: 150,			// Duration of each of the box resize animations (in milliseconds)
 				resizeTransition: false,		// Mootools transition effect (false leaves it at the default)
 				initialWidth: 320,				// Initial width of the box (in pixels)
 				initialHeight: 180,				// Initial height of the box (in pixels)
@@ -80,6 +83,7 @@ var Mediabox;
 											// (all images have no-click code applied, albeit not Opera compatible. To remove, comment lines 212 and 822)
 				imgPadding: 100,			// Clearance necessary for images larger than the window size (only used when imgBackground is false)
 											// Change this number only if the CSS style is significantly divergent from the original, and requires different sizes
+                slideshowInterval: 4000,    // How fast should slideshow (activated with space bar) advance
 //			Inline options
 //				overflow: 'auto',			// If set, overides CSS settings for inline content only
 //			Global media options
@@ -274,6 +278,10 @@ var Mediabox;
 				case 39:	// Right arrow
 				case 78:	// 'n'
 					next();
+					break;
+                //case 13:    // Enter
+                case 32:    // Space bar 
+                    toggleSlideshow();
 			}
 		} else {
 			switch(event.code) {
@@ -285,16 +293,41 @@ var Mediabox;
 					break;
 				case 39:	// Right arrow
 					next();
+					break;
+                //case 13:    // Enter
+                case 32:    // Space bar 
+                    toggleSlideshow();
 			}
 		}
 		if (options.stopKey) { return false; };
+        if (event.code == 32) { return false; };
 	}
+    
+    function stopSlideshow() {
+        if ( slideshowIntervalID != 0 ) {
+            clearInterval(slideshowIntervalID);
+            slideshowIntervalID = 0;
+        }
+    }
+
+    function toggleSlideshow() {
+        // Stop the spacebar event from being handled by browser
+
+        if ( slideshowIntervalID == 0 ) {
+            changeImage(nextImage);
+            slideshowIntervalID = setInterval(function(){changeImage(nextImage)},options.slideshowInterval);
+        } else {
+            stopSlideshow();
+        }
+    }
 
 	function previous() {
+        stopSlideshow();
 		return changeImage(prevImage);
 	}
 
 	function next() {
+        stopSlideshow();
 		return changeImage(nextImage);
 	}
 
@@ -304,7 +337,9 @@ var Mediabox;
 			activeImage = imageIndex;
 			prevImage = ((activeImage || !options.loop) ? activeImage : images.length) - 1;
 			nextImage = activeImage + 1;
+ 			nextImg_2 = activeImage + 2;
 			if (nextImage == images.length) nextImage = options.loop ? 0 : -1;
+ 			if (nextImg_2 >= images.length) nextImg_2 = options.loop ? 0 : -1;
 			stop();
 			center.className = "mbLoading";
 
@@ -898,8 +933,10 @@ var Mediabox;
 		caption.set('html', (options.showCaption && (captionSplit.length > 1)) ? captionSplit[1] : "");
 		number.set('html', (options.showCounter && (images.length > 1)) ? options.counterText.replace(/{x}/, activeImage + 1).replace(/{y}/, images.length) : "");
 
+
 		if ((prevImage >= 0) && (images[prevImage][0].match(/\.gif|\.jpg|\.jpeg|\.png|twitpic\.com/i))) preloadPrev.src = images[prevImage][0].replace(/twitpic\.com/i, "twitpic.com/show/full");
 		if ((nextImage >= 0) && (images[nextImage][0].match(/\.gif|\.jpg|\.jpeg|\.png|twitpic\.com/i))) preloadNext.src = images[nextImage][0].replace(/twitpic\.com/i, "twitpic.com/show/full");
+ 		if ((nextImg_2 >= 0) && (images[nextImg_2][0].match(/\.gif|\.jpg|\.jpeg|\.png|twitpic\.com/i))) preloadNx_2.src = images[nextImg_2][0].replace(/twitpic\.com/i, "twitpic.com/show/full");
 
 		mediaWidth = image.offsetWidth;
 		mediaHeight = image.offsetHeight+bottom.offsetHeight;
@@ -929,6 +966,7 @@ var Mediabox;
 	}
 
 	function close() {
+        stopSlideshow();
 		if (activeImage >= 0) {
 			preload.onload = $empty;
 			image.set('html', '');
