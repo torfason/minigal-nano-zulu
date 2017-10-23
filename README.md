@@ -1,8 +1,7 @@
 minigal-nano-zulu
 =================
 
-Minigal Nano is a stylish template-enabled web album based 
-on the following philosophy:
+Minigal Nano is a stylish template-enabled web album based on the following philosophy:
 
 * Clean interface for the user
 * Drop photos into folder to add
@@ -13,9 +12,10 @@ on the following philosophy:
 * Heavy server side caching of said thumbs
 * Text based configuration
 
-NOTE: Minigal Nano is currently not being actively maintained.
-If it works for you, great. If it needs to be updated, doing
-so is typically not very difficult if you have some PHP experience.
-If you end up doing some improvements, I'd be very happy if you
-clone this project and make those improvements available to others.
+NOTE: Minigal Nano (Zulu Edition) is currently not being actively maintained.
 
+This edition was based on the MinigalNano photo album from Sébastien SAUVAGE, which is available here:
+
+* https://github.com/sebsauvage/MinigalNano
+
+That version is being more actively maintained and may be a better choice. The Zulu Edition has a few new features, if you need them and this edition works for you, that is great. If you'd like to take a stab at combining the more useful additions back into the upstream version by submitting pull requests, that would be even better :-)
